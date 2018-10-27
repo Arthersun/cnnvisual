@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>项目</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
+    <script src="{{url_for('static',filename='js/echarts.js')}}"></script>
+    <script>
+    function submitForm(){
+    var form = document.getElementById("myform");
+    form.submit();
+    }
+    </script>
+</head>
+<body>
+<span class="title">模型名称</span>
+<form action="/" method="GET"  id="myform">
+    <select onchange="submitForm();" name="appname">
+        <option value="temp">cpu温度</option>
+        <option value="mnist">手写数字识别</option>
+    </select>
+</form>
+<br>
+<div name="input">
+<form action="/mnist" method="POST">
+        batch size  : <input type="number" name="BATCH_SIZE">
+        seed : <input type="number" name="SEED">
+        learning rate : <input type="number"  step="0.0001" name="learning_rate">
+        <input type="submit" value="提交">
+</form>
+</div>
+<br>
+<br>
+    <p>batch_size:{{ batch_size }}</p>
+    <p>seed:{{ seed }}</p>
+    <p>learning rate:{{ learning_rate }}</p>
+<div id="main" style="width: 600px;height:400px;">
+
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '训练的损失值'
+            },
+            tooltip: {},
+            legend: {
+                data:['损失值']
+            },
+            xAxis: {
+                data: ["0","200","400","600","800","1000"]
+            },
+            yAxis: {},
+            series: [{
+                name: '损失值',
+                type: 'line',
+                data: [{{ l1 }},{{ l2 }},{{ l3 }},{{ l4 }},{{ l5 }},{{ l6 }}]
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</div>
+</body>
+</html>

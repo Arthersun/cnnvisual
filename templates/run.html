@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>run</title>
+    <script src="{{url_for('static',filename='js/echarts.js')}}"></script>
+</head>
+<body>
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '训练的损失值'
+            },
+            tooltip: {},
+            legend: {
+                data:['迭代次数']
+            },
+            xAxis: {
+                data: ["0","500","1000","1500","2000","2500"]
+            },
+            yAxis: {},
+            series: [{
+                name: '损失值',
+                type: 'line',
+                data: [{{ l1 }},{{ l2 }},{{ l3 }},{{ l4 }},{{ l5 }},{{ l6 }}]
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
